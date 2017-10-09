@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rainbow Six Siege alpha pack simulator</title>
+        <style>
+            #stats {
+                position: fixed;
+                width: 300px;
+                right: 1px;
+                border: solid;
+            }
+
+            #stats p {
+                margin: 0;
+            }
+
+            #stats ul {
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="PackRoller.js"></script>
+
+        <div id="stats">
+            <p id="games">Games played: 0</p>
+            <p id="wins">Games won: 0</p>
+            <p id="packs">Packs won: 0</p>
+            <p id="packsPerGames">Packs/games: 0</p>
+            <p id="averageWins">Average amount of wins for pack: 0</p>
+            <p id="averageGames">Average amount of games for pack: 0</p>
+            <p id="minStreak">Min streak for pack: 0</p>
+            <p id="maxStreak">Max games for pack: 0</p>
+            Rarities:
+            <ul>
+                <li id="rarity0">Common: 0</li>
+                <li id="rarity1">Uncommon: 0</li>
+                <li id="rarity2">Rare: 0</li>
+                <li id="rarity3">Epic: 0</li>
+                <li id="rarity4">Legendary: 0</li>
+            </ul>
+            <p>
+            <label for="input_winratio">Win ratio:</label>
+            <input type="text" id="input_winratio" value="0.5"></input>
+            </p>
+            <p id="interval">Interval: 1000</p>
+        </div>
+
+        <div id="content"></div>
+    </body>
+</html>

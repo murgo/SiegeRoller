@@ -2,6 +2,7 @@ var PackRoller = (function () {
     function PackRoller(rootElement, bottomScroller) {
         this.rootElement = rootElement;
         this.bottomScroller = bottomScroller;
+        // TODO: Check probabilityChange numbers. Check if can pack be rolled for 0% (is probability incremented after rolling for pack?).
         this.probability = 0.0;
         this.packs = 0;
         this.wins = 0;
@@ -80,7 +81,7 @@ var PackRoller = (function () {
     };
     PackRoller.prototype.addMessage = function (msg, color) {
         var el = document.createElement('p');
-        el.textContent = msg + " Current probability: " + (this.probability * 100.0).toFixed(2) + "%.";
+        el.textContent = this.streak + ". " + msg + " Current probability: " + (this.probability * 100.0).toFixed(2) + "%.";
         el.style.color = color;
         this.bottomScroller.check();
         this.rootElement.appendChild(el);

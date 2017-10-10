@@ -1,4 +1,5 @@
 class PackRoller {
+    // TODO: Check probabilityChange numbers. Check if can pack be rolled for 0% (is probability incremented after rolling for pack?).
     probability: number = 0.0;
     packs: number = 0;
     wins: number = 0;
@@ -90,7 +91,7 @@ class PackRoller {
 
     addMessage(msg: string, color: string) {
         var el = document.createElement('p');
-        el.textContent = msg + " Current probability: " + (this.probability * 100.0).toFixed(2) + "%.";
+        el.textContent = this.streak + ". " + msg + " Current probability: " + (this.probability * 100.0).toFixed(2) + "%.";
         el.style.color = color;
         this.bottomScroller.check();
         this.rootElement.appendChild(el);

@@ -95,19 +95,21 @@ var PackRoller = (function () {
     PackRoller.prototype.updateStats = function () {
         document.getElementById("games").innerText = "Games played: " + this.games;
         document.getElementById("wins").innerText = "Games won: " + this.wins;
-        document.getElementById("packs").innerText = "Packs won: " + this.packs;
-        document.getElementById("packsPerGames").innerText = "Packs/games: " + (this.packs / this.games).toFixed(2);
+        document.getElementById("packs").innerText = "Alpha packs won: " + this.packs;
+        document.getElementById("packsPerGames").innerText = "Packs/game: " + (this.packs / this.games).toFixed(2);
         document.getElementById("averageWins").innerText = "Average amount of wins for pack: " + (this.wins / this.packs).toFixed(2);
         document.getElementById("averageGames").innerText = "Average amount of games for pack: " + (this.games / this.packs).toFixed(2);
         document.getElementById("minStreak").innerText = "Min streak for pack: " + this.minStreak;
-        document.getElementById("maxStreak").innerText = "Max games for pack: " + this.maxStreak;
+        document.getElementById("maxStreak").innerText = "Max streak for pack: " + this.maxStreak;
         for (var n = 0; n < this.raritySettings.length; n++) {
             var el = document.getElementById("rarity" + n);
             el.innerText = this.raritySettings[n].name + ": " + this.packsByRarity[n];
             el.style.color = this.raritySettings[n].color;
         }
-        this.winRatio = Number(document.getElementById("input_winratio").value);
-        document.getElementById("interval").innerText = "Interval: " + this.interval;
+        var winlossratio = Number(document.getElementById("input_winlossratio").value);
+        this.winRatio = winlossratio / (1 + winlossratio);
+        document.getElementById("winratio").innerText = "Win probability: " + (this.winRatio * 100.0).toFixed(1) + "%";
+        document.getElementById("interval").innerText = "Interval: " + this.interval.toFixed(0) + ((this.interval > 1) ? " (It gets faster :)" : " (Look at it go! :)");
     };
     return PackRoller;
 }());

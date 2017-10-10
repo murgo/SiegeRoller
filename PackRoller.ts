@@ -10,19 +10,21 @@ class PackRoller {
     minStreak: number = 0;
     maxStreak: number = 0;
 
-    probabilityChangeWin: number = 0.035;
+    probabilityChangeWin: number = 0.03;
     probabilityChangeLose: number = 0.025;
     probabilityByRarity = [ 0.33, 0.615, 0.839, 0.964, 1 ];
+    hoursPerGame: number = 0.5;
 
     raritySettings = [
         { name: "Common", color: "#000000" },
         { name: "Uncommon", color: "#57db2e" },
         { name: "Rare", color: "#3176de" },
         { name: "Epic", color: "#e034e0" },
-        { name: "Legendary", color: "#e39236" } ];
+        { name: "Legendary", color: "#e39236" }
+    ];
 
     interval: number = 1000;
-    intervalChange: number = 0.92;
+    intervalChange: number = 0.91;
     timer: number;
 
     constructor(public rootElement: HTMLElement, public bottomScroller : BottomScroller) {
@@ -32,11 +34,10 @@ class PackRoller {
         this.games += 1;
         this.streak += 1;
 
-        var wonRoll = Math.random();
-        var wonTheMatch = wonRoll <= this.winRatio;
+        var winRoll = Math.random();
+        var wonTheMatch = winRoll <= this.winRatio;
 
         if (wonTheMatch) {
-            this.probability += this.probabilityChangeWin;
             this.wins += 1;
 
             var packRoll = Math.random();
@@ -53,9 +54,8 @@ class PackRoller {
                 }
                 this.packsByRarity[n] += 1;
                 var rar = this.raritySettings[n];
-                this.addMessage("Won the game and got a " + rar.name + " alpha pack!", rar.color);
 
-                this.probability = 0;
+                this.probability = this.probabilityChangeWin; // reset to 3
                 if (this.minStreak == 0 || this.streak < this.minStreak) {
                     this.minStreak = this.streak;
                 }
@@ -64,8 +64,11 @@ class PackRoller {
                 }
                 this.streak = 0;
 
+                this.addMessage("Won the game and got a " + rar.name + " alpha pack!", rar.color);
+
                 this.clear();
             } else {
+                this.probability += this.probabilityChangeWin;
                 this.addMessage("Won the game, but didn't get pack.", "#7d7d7d");
             }
         } else {
@@ -86,12 +89,12 @@ class PackRoller {
             this.rootElement.innerHTML = "";
             this.updateStats();
             this.run();
-        }, this.interval * 2);
+        }, this.interval * 2.5);
     }
 
     addMessage(msg: string, color: string) {
         var el = document.createElement('p');
-        el.textContent = this.streak + ". " + msg + " Current probability: " + (this.probability * 100.0).toFixed(2) + "%.";
+        el.textContent = this.streak + ". " + msg + " New alpha pack chance: " + (this.probability * 100.0).toFixed(2) + "%.";
         el.style.color = color;
         this.bottomScroller.check();
         this.rootElement.appendChild(el);
@@ -112,6 +115,9 @@ class PackRoller {
         document.getElementById("averageGames").innerText = "Average amount of games for pack: " + (this.games / this.packs).toFixed(2);
         document.getElementById("minStreak").innerText = "Min streak for pack: " + this.minStreak;
         document.getElementById("maxStreak").innerText = "Max streak for pack: " + this.maxStreak;
+        document.getElementById("hoursPlayed").innerText = "Hours played: " + (this.games * this.hoursPerGame);
+        document.getElementById("hoursPerPack").innerText = "Hours of ranked for a pack: " + ((this.games * this.hoursPerGame) / this.packs).toFixed(2);
+        document.getElementById("hoursPerLegendary").innerText = "Hours of ranked for a legendary: " + ((this.games * this.hoursPerGame) / this.packsByRarity[4]).toFixed(2);
 
         for (let n = 0; n < this.raritySettings.length; n++) {
             let el = document.getElementById("rarity" + n);
@@ -131,7 +137,6 @@ class BottomScroller {
     isScrolledToBottom: boolean;
 
     constructor(public rootElement: HTMLElement) {
-
     }
 
     check() {

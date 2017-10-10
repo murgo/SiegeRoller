@@ -2,12 +2,14 @@
 <html>
     <head>
         <title>Rainbow Six Siege alpha pack simulator</title>
+        <meta charset="UTF-8">
         <style>
             #stats {
                 position: fixed;
                 right: 1px;
                 top: 1px;
                 border: solid;
+                background: whitesmoke;
             }
 
             #stats p {
@@ -23,7 +25,11 @@
             }
 
             #stats div {
-                margin: 5px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-family: Tahoma, Geneva, sans-serif;
             }
         </style>
     </head>
@@ -44,6 +50,13 @@
             </div>
 
             <div>
+                Time approximations:
+                <p id="hoursPlayed">Hours played: 0h</p>
+                <p id="hoursPerPack">Hours of ranked for a pack: 0h</p>
+                <p id="hoursPerLegendary">Hours of ranked for a legendary: 0h</p>
+            </div>
+
+            <div>
             Rarities:
                 <ul>
                     <li id="rarity0">Common: 0</li>
@@ -57,13 +70,14 @@
             <div>
                 <p>
                     <label for="input_winlossratio">Win/loss ratio:</label>
-                    <input type="text" id="input_winlossratio" value="1.0"></input>
+                    <input type="text" id="input_winlossratio" value="1.0" />
                 </p>
                 <p id="winratio">Win probability: 50%</p>
                 <p id="interval">Interval: 1000 (it gets faster :)</p>
             </div>
         </div>
 
+        <h1>Let's play some Siege and get those sweet alpha packs</h1>
         <div id="content"></div>
     </body>
 </html>
